@@ -15,12 +15,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.common.server.converter.StringToIntConverter;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
@@ -34,6 +36,8 @@ import com.google.android.gms.gcm.PeriodicTask;
 import com.google.android.gms.gcm.Task;
 import com.melnykov.fab.FloatingActionButton;
 import com.sam_chordas.android.stockhawk.touch_helper.SimpleItemTouchHelperCallback;
+
+import java.util.Arrays;
 
 public class MyStocksActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
@@ -80,13 +84,54 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this);
 
+
     mCursorAdapter = new QuoteCursorAdapter(this, null);
+
     recyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(this,
             new RecyclerViewItemClickListener.OnItemClickListener() {
+
+              String stockName;
+              int isUp;
+              String currentPrice;
+              String changePercent;
+              String changeAbs;
+              String companyName;
+
               @Override public void onItemClick(View v, int position) {
-                //TODO:
-                // do something on item click
+                long itemId = mCursorAdapter.getItemId(position);
+                Cursor cursor = mCursorAdapter.getCursor();
+
+                while (cursor.moveToNext()) {
+                  //TODO: fix last element problem
+
+                  cursor.moveToPrevious();
+                  if (cursor.getLong(cursor.getColumnIndex("_id")) == itemId) {
+
+                    stockName = cursor.getString(cursor.getColumnIndex("symbol"));
+                    currentPrice = cursor.getString(cursor.getColumnIndex("bid_price"));
+                    changePercent = cursor.getString(cursor.getColumnIndex("percent_change"));
+                    changeAbs = cursor.getString(cursor.getColumnIndex("change"));
+                    isUp = cursor.getInt(cursor.getColumnIndex("is_up"));
+                    companyName = cursor.getString(cursor.getColumnIndex("Name"));
+
+                    Log.i("COLUMNS", Arrays.toString(cursor.getColumnNames()));
+                    Log.i("ISUP", String.valueOf(isUp));
+
+
+                    break;
+                  }
+                }
+
+                Intent intent = new Intent(MyStocksActivity.this, StockDetails.class);
+                intent.putExtra("ticker", stockName);
+                intent.putExtra("abs", changeAbs);
+                intent.putExtra("percent", changePercent);
+                intent.putExtra("bid", currentPrice);
+                intent.putExtra("is_up", isUp);
+                intent.putExtra("Name", companyName);
+                startActivity(intent);
               }
+
             }));
     recyclerView.setAdapter(mCursorAdapter);
 
