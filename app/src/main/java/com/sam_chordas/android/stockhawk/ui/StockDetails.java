@@ -1,5 +1,6 @@
 package com.sam_chordas.android.stockhawk.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,12 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sam_chordas.android.stockhawk.R;
+import com.sam_chordas.android.stockhawk.service.StockHistoryDataService;
 
 import java.util.List;
 
-/**
- * Created by dmytrokaganovskyi on 8/4/16.
- */
 public class StockDetails extends AppCompatActivity {
 
     private ViewPager mViewPager;
@@ -29,6 +28,8 @@ public class StockDetails extends AppCompatActivity {
     private Bundle stockDetails;
 
     public static final int NUM_PAGES = 3;
+
+    private Intent mHistoryServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,11 @@ public class StockDetails extends AppCompatActivity {
 
         stockDetails = getIntent().getExtras();
         Log.i("StokDetails", stockDetails.toString());
+
+        mHistoryServiceIntent = new Intent(this, StockHistoryDataService.class);
+        mHistoryServiceIntent.putExtras(stockDetails);
+        startService(mHistoryServiceIntent);
+
 
     }
 

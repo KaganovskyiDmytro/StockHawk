@@ -96,6 +96,13 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
               String changePercent;
               String changeAbs;
               String companyName;
+              String aveVolume;
+              String dayVolume;
+              String mrktCap;
+              String yearLow;
+              String yearHigh;
+              String ebitda;
+              String dayOpen;
 
               @Override public void onItemClick(View v, int position) {
                 long itemId = mCursorAdapter.getItemId(position);
@@ -114,6 +121,14 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                     isUp = cursor.getInt(cursor.getColumnIndex("is_up"));
                     companyName = cursor.getString(cursor.getColumnIndex("Name"));
 
+                    dayOpen = cursor.getString(cursor.getColumnIndex("Open"));
+                    aveVolume = cursor.getString(cursor.getColumnIndex("AverageDailyVolume"));
+                    dayVolume = cursor.getString(cursor.getColumnIndex("Volume"));
+                    mrktCap = cursor.getString(cursor.getColumnIndex("MarketCapitalization"));
+                    yearLow = cursor.getString(cursor.getColumnIndex("YearLow"));
+                    yearHigh = cursor.getString(cursor.getColumnIndex("YearHigh"));
+                    ebitda = cursor.getString(cursor.getColumnIndex("EBITDA"));
+
                     Log.i("COLUMNS", Arrays.toString(cursor.getColumnNames()));
                     Log.i("ISUP", String.valueOf(isUp));
 
@@ -129,6 +144,15 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                 intent.putExtra("bid", currentPrice);
                 intent.putExtra("is_up", isUp);
                 intent.putExtra("Name", companyName);
+                intent.putExtra("Open", dayOpen);
+
+                intent.putExtra("AverageDailyVolume", aveVolume);
+                intent.putExtra("Volume", dayVolume);
+                intent.putExtra("MarketCapitalization", mrktCap);
+                intent.putExtra("YearLow", yearLow);
+                intent.putExtra("YearHigh", yearHigh);
+                intent.putExtra("EBITDA", ebitda);
+
                 startActivity(intent);
               }
 
@@ -194,6 +218,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
           .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
           .setRequiresCharging(false)
           .build();
+
       // Schedule task with tag "periodic." This ensure that only the stocks present in the DB
       // are updated.
       GcmNetworkManager.getInstance(this).schedule(periodicTask);
@@ -250,8 +275,10 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   public Loader<Cursor> onCreateLoader(int id, Bundle args){
     // This narrows the return to only the stocks that are most current.
     return new CursorLoader(this, QuoteProvider.Quotes.CONTENT_URI,
-        new String[]{ QuoteColumns._ID, QuoteColumns.SYMBOL, QuoteColumns.BIDPRICE,
-            QuoteColumns.PERCENT_CHANGE, QuoteColumns.CHANGE, QuoteColumns.ISUP},
+        new String[]{ QuoteColumns._ID, QuoteColumns.SYMBOL, QuoteColumns.NAME, QuoteColumns.BIDPRICE,
+            QuoteColumns.PERCENT_CHANGE, QuoteColumns.CHANGE, QuoteColumns.ISUP, QuoteColumns.EBITDA,
+                QuoteColumns.OPEN, QuoteColumns.AVEVOLUME, QuoteColumns.VOLUME, QuoteColumns.MRKTCAP,
+                QuoteColumns.YEARLOW, QuoteColumns.YEARHIGH},
         QuoteColumns.ISCURRENT + " = ?",
         new String[]{"1"},
         null);

@@ -10,9 +10,6 @@ import android.widget.TextView;
 
 import com.sam_chordas.android.stockhawk.R;
 
-/**
- * Created by dmytrokaganovskyi on 8/5/16.
- */
 public class StockPagerFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -42,6 +39,6 @@ public class StockPagerFragment extends Fragment {
         TextView tvPager = (TextView) view.findViewById(R.id.section_label);
         tvPager.setText("Hello");
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 }

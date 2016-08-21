@@ -10,4 +10,16 @@
   <string name="input_hint">FB</string>
   <string name="input_prefill"></string>
   <string name="network_toast">Uh-oh! This app requires an internet connection</string>
+  <string name="fundamentals">FUNDAMENTALS</string>
+  <string name="mkt_cap">Mkt Cap</string>
+  <string name="year_low">Year Low</string>
+  <string name="year_high">Year High</string>
+  <string name="ebitda">EBITDA</string>
+  <string name="day_open">Open</string>
+  <string name="ave_day_volume">Average Day Volume</string>
+  <string name="current_volume">Volume</string>
+  <string name="start_date">Start Date</string>
+  <string name="end_date">End Date</string>
+    <string name="enter_start_date">Enter Start Date</string>
+    <string name="enter_end_date">Enter End Date</string>
 </resources>

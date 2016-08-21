@@ -27,4 +27,18 @@ public class QuoteColumns {
   public static final String ISCURRENT = "is_current";
   @DataType(DataType.Type.TEXT) @NotNull
   public static final String NAME = "Name";
+  @DataType(DataType.Type.TEXT) @NotNull
+  public static final String OPEN = "Open";
+  @DataType(DataType.Type.TEXT) @NotNull
+  public static final String AVEVOLUME = "AverageDailyVolume";
+  @DataType(DataType.Type.TEXT) @NotNull
+  public static final String VOLUME = "Volume";
+  @DataType(DataType.Type.TEXT) @NotNull
+  public static final String MRKTCAP = "MarketCapitalization";
+  @DataType(DataType.Type.TEXT) @NotNull
+  public static final String EBITDA = "EBITDA";
+  @DataType(DataType.Type.TEXT) @NotNull
+  public static final String YEARLOW = "YearLow";
+  @DataType(DataType.Type.TEXT) @NotNull
+  public static final String YEARHIGH = "YearHigh";
 }

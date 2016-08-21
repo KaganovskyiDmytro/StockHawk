@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fundamentals">FUNDAMENTALS</string>
+    <string name="mkt_cap">Mkt Cap</string>
+    <string name="year_low">Year Low</string>
+    <string name="ebitda">EBITDA</string>
+    <string name="day_open">Open</string>
+    <string name="ave_day_volume">Average Day Volume</string>
+    <string name="enter_start_date">Enter Start Date</string>
+</resources>
