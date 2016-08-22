@@ -1,48 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-
-    <TextView
-        android:id="@+id/stock_ticker_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:textSize="24sp" />
-
-
-    <TextView
-        android:id="@+id/stock_current_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:layout_marginStart="15dp"
-        android:textSize="20dp" />
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="15dp"
-        android:paddingTop="10dp">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/stock_company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/stock_ticker_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"/>
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/stock_change_abs"
+            android:id="@+id/stock_current_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="10dp"
-            android:textSize="12dp" />
+            android:layout_marginStart="15dp"
+            android:paddingTop="10dp"
+            android:textSize="16sp"/>
 
-        <TextView
-            android:id="@+id/stock_change_percent"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12dp" />
+            android:layout_marginStart="15dp"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
 
+            <TextView
+                android:id="@+id/stock_change_abs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="10dp"
+                android:textSize="12dp"/>
+
+            <TextView
+                android:id="@+id/stock_change_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fundamentals"
+            android:textSize="16sp"
+            android:paddingBottom="3dp"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+
+            <TableRow>
+                <TextView
+                    android:text="@string/day_open"
+                    android:padding="3dp"/>
+
+                <TextView
+                    android:id="@+id/stock_day_open"
+                    android:padding="3dp"
+                    android:gravity="end"/>
+
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/ave_day_volume"
+                    android:padding="3dp"/>
+
+                <TextView
+                    android:id="@+id/ave_day_volume"
+                    android:padding="3dp"
+                    android:gravity="end"/>
+
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/current_volume"
+                    android:padding="3dp"/>
+
+                <TextView
+                    android:id="@+id/current_volume"
+                    android:padding="3dp"
+                    android:gravity="end"/>
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:text="@string/mkt_cap"
+                    android:padding="3dp"/>
+
+                <TextView
+                    android:id="@+id/stock_mrkt_cap"
+                    android:padding="3dp"
+                    android:gravity="end"/>
+
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/year_low"
+                    android:padding="3dp"/>
+
+                <TextView
+                    android:id="@+id/year_low"
+                    android:padding="3dp"
+                    android:gravity="end"/>
+
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/year_high"
+                    android:padding="3dp"/>
+
+                <TextView
+                    android:id="@+id/year_high"
+                    android:padding="3dp"
+                    android:gravity="end"/>
+
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/ebitda"
+                    android:padding="3dp"/>
+
+                <TextView
+                    android:id="@+id/stock_ebitda"
+                    android:padding="3dp"
+                    android:gravity="end"/>
+
+            </TableRow>
+
+        </TableLayout>
+
+
+    </LinearLayout>
 
 </LinearLayout>
