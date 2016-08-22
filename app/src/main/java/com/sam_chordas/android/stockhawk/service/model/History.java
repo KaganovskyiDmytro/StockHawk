@@ -20,7 +20,7 @@ public class History {
     private String high;
     @SerializedName("Open")
     private String open;
-    @SerializedName("Closed")
+    @SerializedName("Close")
     private String closed;
 
     public String getSymbol() {

@@ -3,6 +3,7 @@ package com.sam_chordas.android.stockhawk.service;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.RemoteException;
@@ -41,14 +42,18 @@ public class StockHistoryDataService extends GcmTaskService {
 
     @Override
     public int onRunTask(TaskParams taskParams) {
+        Log.i("Service History Task", taskParams.toString());
 
+        mContext = getApplicationContext();
         List<History> historyList = Collections.emptyList();
 
+        String ticker = taskParams.getExtras().getString("ticker");
         Cursor historyQueryCursor = mContext.getContentResolver().query(QuoteProvider.History.CONTENT_URI,
-                new String[]{HistoryColumns.CREATED}, null,
-                null, HistoryColumns.CREATED + " DESC");
+                new String[]{HistoryColumns.CREATED},
+                HistoryColumns.SYMBOL + " = ?", new String[]{ticker},
+                HistoryColumns.CREATED + " DESC");
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, -5);
+        calendar.add(Calendar.YEAR, -2);
         Date startDate = calendar.getTime();
         boolean shouldUpdate = true;
         created = YQL.SQL_FORMAT.format(new Date());
@@ -75,9 +80,12 @@ public class StockHistoryDataService extends GcmTaskService {
             }
         }
 
+        Log.d("tag", "should update " + shouldUpdate);
+
         if (shouldUpdate) {
             Log.d("tag", "query data from " + startDate + " to " + new Date());
-            historyList = nm.getHistoricalData(taskParams.getExtras().getString("symbol"), startDate, new Date());
+            Log.d("tag", "ticker = " + taskParams.getExtras().getString("ticker") + " startDate = " + startDate);
+            historyList = nm.getHistoricalData(taskParams.getExtras().getString("ticker"), startDate, new Date());
         }
 
         if (historyList.isEmpty()) {

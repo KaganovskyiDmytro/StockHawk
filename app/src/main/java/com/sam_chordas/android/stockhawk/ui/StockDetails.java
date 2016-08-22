@@ -14,8 +14,12 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.gcm.GcmNetworkManager;
+import com.google.android.gms.gcm.OneoffTask;
+import com.google.android.gms.gcm.Task;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.service.StockHistoryDataService;
+import com.sam_chordas.android.stockhawk.service.StockTaskService;
 
 import java.util.List;
 
@@ -44,9 +48,18 @@ public class StockDetails extends AppCompatActivity {
         stockDetails = getIntent().getExtras();
         Log.i("StokDetails", stockDetails.toString());
 
-        mHistoryServiceIntent = new Intent(this, StockHistoryDataService.class);
-        mHistoryServiceIntent.putExtras(stockDetails);
-        startService(mHistoryServiceIntent);
+//        mHistoryServiceIntent = new Intent(this, StockHistoryDataService.class);
+//        mHistoryServiceIntent.putExtras(stockDetails);
+//        startService(mHistoryServiceIntent);
+        OneoffTask task = new OneoffTask.Builder()
+                .setService(StockHistoryDataService.class)
+                .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
+                .setExtras(stockDetails)
+                .setExecutionWindow(0, 100)
+                .setTag("whatever")
+                .setRequiresCharging(false)
+                .build();
+        GcmNetworkManager.getInstance(this).schedule(task);
 
 
     }

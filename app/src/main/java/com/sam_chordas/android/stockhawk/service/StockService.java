@@ -2,6 +2,7 @@ package com.sam_chordas.android.stockhawk.service;
 
 import com.sam_chordas.android.stockhawk.service.response.HistoryResponse;
 import com.sam_chordas.android.stockhawk.service.response.StockResponse;
+import com.squareup.okhttp.ResponseBody;
 
 import java.util.List;
 import java.util.Map;

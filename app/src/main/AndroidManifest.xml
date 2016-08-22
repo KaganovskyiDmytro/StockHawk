@@ -40,7 +40,6 @@
                 <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY"/>
             </intent-filter>
         </service>
-        <service android:name="com.sam_chordas.android.stockhawk.service.StockIntentService"/>
         <service
             android:name="com.sam_chordas.android.stockhawk.service.StockHistoryDataService"
             android:exported="true"
@@ -49,6 +48,7 @@
                 <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY"/>
             </intent-filter>
         </service>
+        <service android:name="com.sam_chordas.android.stockhawk.service.StockIntentService"/>
 
         <provider
             android:name="com.sam_chordas.android.stockhawk.data.generated.QuoteProvider"
