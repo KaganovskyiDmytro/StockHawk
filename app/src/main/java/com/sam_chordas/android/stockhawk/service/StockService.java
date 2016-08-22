@@ -12,9 +12,7 @@ import retrofit2.http.QueryMap;
 
 import static com.sam_chordas.android.stockhawk.service.NetworkConstants.*;
 
-/**
- * Created by yarolegovich on 14.08.2016.
- */
+
 public interface StockService {
 
     /*

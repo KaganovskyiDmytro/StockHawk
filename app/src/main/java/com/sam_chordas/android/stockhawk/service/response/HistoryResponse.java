@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by yarolegovich on 14.08.2016.
- */
+
 public class HistoryResponse {
 
      /*

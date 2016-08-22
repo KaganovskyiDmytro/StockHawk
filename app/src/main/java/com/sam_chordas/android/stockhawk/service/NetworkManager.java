@@ -22,9 +22,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by yarolegovich on 14.08.2016.
- */
+
 public class NetworkManager {
 
     private static final String LOG_TAG = NetworkManager.class.getSimpleName();
