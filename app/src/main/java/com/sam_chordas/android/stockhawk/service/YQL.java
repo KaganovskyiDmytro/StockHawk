@@ -21,9 +21,9 @@ public abstract class YQL {
             "WHERE symbol in (%s)";
     private static final String QUERY_HISTORY = "SELECT * " +
             "FROM yahoo.finance.historicaldata " +
-            "WHERE symbol=\"%s\"" +
-            "AND startDate=\"%s\"" +
-            "AND endDate=\"%s\"";
+            "WHERE symbol=\"%s\" " +
+            "AND startDate=\"%s\" " +
+            "AND endDate=\"%s\" ";
 
     public static final DateFormat SQL_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
