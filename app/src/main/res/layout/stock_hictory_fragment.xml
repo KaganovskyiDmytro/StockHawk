@@ -22,7 +22,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/enter_start_date"/>
+            android:text="@string/enter_start_date"
+            android:contentDescription="@string/enter_start_date"/>
 
     </LinearLayout>
 
@@ -43,7 +44,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/enter_end_date"/>
+            android:text="@string/enter_end_date"
+            android:contentDescription="@string/enter_end_date"/>
 
     </LinearLayout>
 

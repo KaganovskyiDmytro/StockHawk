@@ -43,6 +43,7 @@ public abstract class YQL {
         for (int i = 0; i < symbol.length; i++) {
             stocks[i] = "\"" + symbol[i] + "\"";
         }
+
         return String.format(QUERY_STOCK, TextUtils.join(", ", stocks));
     }
 

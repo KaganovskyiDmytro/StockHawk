@@ -53,7 +53,7 @@ public class StockHistoryDataService extends GcmTaskService {
                 HistoryColumns.SYMBOL + " = ?", new String[]{ticker},
                 HistoryColumns.CREATED + " DESC");
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, -2);
+        calendar.add(Calendar.YEAR, -1);
         Date startDate = calendar.getTime();
         boolean shouldUpdate = true;
         created = YQL.SQL_FORMAT.format(new Date());
@@ -63,8 +63,10 @@ public class StockHistoryDataService extends GcmTaskService {
                 if (created.equals(historyQueryCursor.getString(columnIndex))) {
                     shouldUpdate = false;
                 } else {
-                    Cursor cursor = mContext.getContentResolver().query(QuoteProvider.History.CONTENT_URI, new String[] { HistoryColumns.DATE},
-                            null, null, HistoryColumns.DATE + " DESC");
+                    Cursor cursor = mContext.getContentResolver().query(
+                            QuoteProvider.History.CONTENT_URI, new String[] { HistoryColumns.DATE},
+                            HistoryColumns.SYMBOL + " = ?", new String[] {ticker},
+                            HistoryColumns.DATE + " DESC");
                     if (cursor != null && cursor.moveToFirst()) {
                         int dateColumnIndex = cursor.getColumnIndex(HistoryColumns.DATE);
                         String date = cursor.getString(dateColumnIndex);
