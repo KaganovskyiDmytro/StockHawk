@@ -1,20 +1,28 @@
 package com.sam_chordas.android.stockhawk.service;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.RemoteException;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
+import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.sam_chordas.android.stockhawk.rest.Utils;
 import com.sam_chordas.android.stockhawk.service.model.Stock;
+import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
+import com.sam_chordas.android.stockhawk.widget.WidgetProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,6 +66,8 @@ public class StockTaskService extends GcmTaskService {
             if (initQueryCursor != null) {
                 if (initQueryCursor.getCount() == 0) {
                     stocksToUpdate = nm.getStocks("YHOO", "AAPL", "GOOG", "MSFT");
+                } else {
+                    return GcmNetworkManager.RESULT_SUCCESS;
                 }
                 initQueryCursor.close();
             }
@@ -66,9 +76,14 @@ public class StockTaskService extends GcmTaskService {
             String stockInput = params.getExtras().getString("symbol");
             stocksToUpdate = nm.getStocks(stockInput);
         }
+
         if (stocksToUpdate.isEmpty()) {
+            Intent intent = new Intent(MyStocksActivity.ACTION_LOAD_RESULT);
+            intent.putExtra(MyStocksActivity.EXTRA_LOADED, false);
+            LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
             return GcmNetworkManager.RESULT_FAILURE;
         }
+
         try {
             ContentValues contentValues = new ContentValues();
             // update ISCURRENT to 0 (false) so new data is current
@@ -86,6 +101,12 @@ public class StockTaskService extends GcmTaskService {
                 }
             }
             mContext.getContentResolver().applyBatch(QuoteProvider.AUTHORITY, batch);
+            if (!batch.isEmpty()) {
+                AppWidgetManager awm = AppWidgetManager.getInstance(mContext);
+                awm.notifyAppWidgetViewDataChanged(
+                        awm.getAppWidgetIds(new ComponentName(mContext, WidgetProvider.class)),
+                        R.id.widget_listview);
+            }
         } catch (RemoteException | OperationApplicationException e) {
             Log.e(LOG_TAG, "Error applying batch insert", e);
         }

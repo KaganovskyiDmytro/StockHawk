@@ -1,13 +1,21 @@
 package com.sam_chordas.android.stockhawk.ui;
 
 import android.app.DatePickerDialog;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,11 +60,16 @@ public class StockHistoryPriceFragment extends Fragment implements View.OnClickL
     private TextView endDateView;
     private Calendar calendar;
 
+    private HistoryObserver mHistoryObserver;
+
     private final static String DIALOG_DATE = "DialogDate";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mHistoryObserver = new HistoryObserver(new Handler(Looper.getMainLooper()));
+
         calendar = Calendar.getInstance();
         Bundle args = getArguments();
         args.putString("ticker", args.getString("ticker"));
@@ -88,6 +101,12 @@ public class StockHistoryPriceFragment extends Fragment implements View.OnClickL
 
         return view;
     }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        getActivity().getContentResolver().registerContentObserver(QuoteProvider.History.CONTENT_URI, true, mHistoryObserver);
+    }
+
     @Override
     public void onClick(View v) {
         DatePickerDialog d;
@@ -147,6 +166,7 @@ public class StockHistoryPriceFragment extends Fragment implements View.OnClickL
             set1.setValues(values);
             mChart.getData().notifyDataChanged();
             mChart.notifyDataSetChanged();
+            mChart.invalidate();
         } else {
             // create a dataset and give it a type
             set1 = new LineDataSet(values, "DataSet 1");
@@ -171,6 +191,7 @@ public class StockHistoryPriceFragment extends Fragment implements View.OnClickL
 
             // set data
             mChart.setData(data);
+            mChart.invalidate();
         }
     }
 
@@ -178,6 +199,8 @@ public class StockHistoryPriceFragment extends Fragment implements View.OnClickL
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             calendar.set((Calendar.YEAR), year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             if (startDate == null) {
                 startDate = calendar.getTime();
                 startDateView.setText(YQL.SQL_FORMAT.format(startDate));
@@ -191,4 +214,28 @@ public class StockHistoryPriceFragment extends Fragment implements View.OnClickL
         }
     };
 
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().getContentResolver().unregisterContentObserver(mHistoryObserver);
+    }
+
+    public class HistoryObserver extends ContentObserver {
+
+        public HistoryObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            this.onChange(selfChange,null);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            setData();
+        }
+    }
 }
