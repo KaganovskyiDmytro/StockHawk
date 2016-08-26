@@ -326,7 +326,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         public void onReceive(Context context, Intent intent) {
             boolean loadResult = intent.getBooleanExtra(EXTRA_LOADED, false);
             if (!loadResult) {
-                Toast.makeText(context, "Data loading failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.failed_adding, Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -13,7 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/fragment_margin_start"
             android:orientation="vertical">
 
 
@@ -37,14 +37,14 @@
             android:id="@+id/stock_current_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:paddingTop="10dp"
+            android:layout_marginStart="@dimen/fragment_margin_start"
+            android:paddingTop="@dimen/fragment_padding_top"
             android:textSize="16sp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="@dimen/fragment_margin_start"
             android:orientation="horizontal"
             android:paddingTop="10dp">
 
@@ -52,7 +52,7 @@
                 android:id="@+id/stock_change_abs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
+                android:paddingEnd="@dimen/fragment_padding_top"
                 android:textSize="12dp"/>
 
             <TextView
@@ -67,8 +67,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginStart="@dimen/fragment_margin_start"
+        android:layout_marginEnd="@dimen/fragment_margin_start"
         android:layout_height="0dp"
         android:layout_weight="3"
         android:orientation="vertical">
