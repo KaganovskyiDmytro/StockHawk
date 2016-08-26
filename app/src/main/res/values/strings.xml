@@ -23,6 +23,6 @@
     <string name="enter_start_date">Enter Start Date</string>
     <string name="enter_end_date">Enter End Date</string>
     <string name="add_strock">add stock</string>
-    <string name="failed_adding">No such stock</string>
+    <string name="failed_loading">Can\'t load data</string>
     <string name="widget_no_data">No data</string>
 </resources>

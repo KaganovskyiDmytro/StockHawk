@@ -77,7 +77,7 @@ public class StockTaskService extends GcmTaskService {
             stocksToUpdate = nm.getStocks(stockInput);
         }
 
-        if (stocksToUpdate.isEmpty()) {
+        if (stocksToUpdate.isEmpty() || isInvalidTicker(stocksToUpdate)) {
             Intent intent = new Intent(MyStocksActivity.ACTION_LOAD_RESULT);
             intent.putExtra(MyStocksActivity.EXTRA_LOADED, false);
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
@@ -112,6 +112,10 @@ public class StockTaskService extends GcmTaskService {
         }
 
         return GcmNetworkManager.RESULT_SUCCESS;
+    }
+
+    private boolean isInvalidTicker(List<Stock> result) {
+        return result.get(0).getName() == null;
     }
 
     private static ContentProviderOperation buildBatchOperation(Stock stock) {
