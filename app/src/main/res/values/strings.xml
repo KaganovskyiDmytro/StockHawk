@@ -25,4 +25,5 @@
     <string name="add_strock">add stock</string>
     <string name="failed_loading">Can\'t load data</string>
     <string name="widget_no_data">No data</string>
+    <string name="stock_exist">This stock is already saved!</string>
 </resources>
